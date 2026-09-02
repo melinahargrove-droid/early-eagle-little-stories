@@ -1,4 +1,5 @@
 import { db } from '../../db/database.js'
+import { applyThemeToDocument } from '../themes/themes.js'
 
 function makeId(prefix) {
   return `${prefix}-${crypto.randomUUID()}`
@@ -16,11 +17,11 @@ const FLOW = [
 export async function buildBookPages(bookId) {
   const book = await db.books.get(bookId)
   if (!book) throw new Error('Book not found')
+  applyThemeToDocument(book.themeId)
   const photoIds = book.photoIds ?? []
   const now = new Date().toISOString()
   const pages = []
   let order = 0
-
   pages.push({ id: makeId('page'), bookId, order: order++, layoutId: 'cover', photoIds: photoIds.length ? [photoIds[0]] : [], title: book.title, caption: '', quote: '', speaker: '', createdAt: now, updatedAt: now })
   let cursor = 0
   let flowIndex = 0
@@ -34,7 +35,6 @@ export async function buildBookPages(bookId) {
     flowIndex += 1
   }
   pages.push({ id: makeId('page'), bookId, order: order++, layoutId: 'the-end', photoIds: [], title: 'The End', caption: '', quote: '', speaker: '', createdAt: now, updatedAt: now })
-
   await db.transaction('rw', db.pages, db.books, async () => {
     await db.pages.where('bookId').equals(bookId).delete()
     await db.pages.bulkAdd(pages)
@@ -43,7 +43,12 @@ export async function buildBookPages(bookId) {
   return pages
 }
 
-export async function getBookPages(bookId) { return db.pages.where('bookId').equals(bookId).sortBy('order') }
+export async function getBookPages(bookId) {
+  const book = await db.books.get(bookId)
+  if (book) applyThemeToDocument(book.themeId)
+  return db.pages.where('bookId').equals(bookId).sortBy('order')
+}
+
 export async function updatePageLayout(pageId, layoutId) { await db.pages.update(pageId, { layoutId, updatedAt: new Date().toISOString() }); return db.pages.get(pageId) }
 
 export async function updatePageText(pageId, changes) {
