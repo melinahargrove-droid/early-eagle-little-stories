@@ -7,6 +7,15 @@ export async function getThumbnailUrl(photoId) {
   return URL.createObjectURL(thumb.blob)
 }
 
+// Printing must never rely on the lightweight editor thumbnail. Use the
+// original stored image blob so Android print/PDF gets the best source we have.
+export async function getOriginalPhotoUrl(photoId) {
+  if (!photoId) return null
+  const photo = await db.photos.get(photoId)
+  if (!photo?.blob) return null
+  return URL.createObjectURL(photo.blob)
+}
+
 export function releaseObjectUrl(url) {
   if (url?.startsWith('blob:')) URL.revokeObjectURL(url)
 }
