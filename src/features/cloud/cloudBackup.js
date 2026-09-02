@@ -2,7 +2,8 @@ import { db } from '../../db/database.js'
 import { exportPortableBackup, restorePortableBackup } from '../backup/backupService.js'
 import { isCloudConfigured, supabase } from './supabaseClient.js'
 
-const BUCKET = 'little-stories-backups'
+const BUCKET = 'one-little-teacher-backups'
+const APP_NAMESPACE = 'little-stories'
 const FILE_NAME = 'latest.littlestories.zip'
 
 export async function getCloudSession() {
@@ -12,10 +13,10 @@ export async function getCloudSession() {
 }
 
 export async function sendMagicLink(email) {
-  if (!isCloudConfigured) throw new Error('Little Stories Cloud is not configured yet.')
+  if (!isCloudConfigured) throw new Error('One Little Teacher Cloud is not configured yet.')
   const { error } = await supabase.auth.signInWithOtp({
     email: email.trim(),
-    options: { emailRedirectTo: window.location.origin },
+    options: { emailRedirectTo: window.location.href.split('#')[0] },
   })
   if (error) throw error
 }
@@ -27,12 +28,12 @@ export async function signOutCloud() {
 }
 
 function backupPath(userId) {
-  return `${userId}/${FILE_NAME}`
+  return `${userId}/${APP_NAMESPACE}/${FILE_NAME}`
 }
 
 export async function uploadCloudBackup() {
   const session = await getCloudSession()
-  if (!session?.user) throw new Error('Sign in to Little Stories before backing up online.')
+  if (!session?.user) throw new Error('Sign in to One Little Teacher Cloud before backing up online.')
 
   const { blob, manifest } = await exportPortableBackup()
   const path = backupPath(session.user.id)
@@ -46,6 +47,7 @@ export async function uploadCloudBackup() {
   const backedUpAt = new Date().toISOString()
   await db.backupMetadata.put({
     id: 'little-stories-cloud', bookId: null, status: 'backed-up',
+    provider: 'one-little-teacher-cloud', appNamespace: APP_NAMESPACE,
     lastBackedUpAt: backedUpAt, userId: session.user.id,
     bookCount: manifest.counts.books, photoCount: manifest.counts.photos,
   })
@@ -65,7 +67,7 @@ export async function autoCloudBackupIfNeeded() {
 
 export async function restoreLatestCloudBackup() {
   const session = await getCloudSession()
-  if (!session?.user) throw new Error('Sign in to Little Stories before restoring.')
+  if (!session?.user) throw new Error('Sign in to One Little Teacher Cloud before restoring.')
   const { data, error } = await supabase.storage.from(BUCKET).download(backupPath(session.user.id))
   if (error) throw error
   const file = new File([data], FILE_NAME, { type: 'application/zip' })
