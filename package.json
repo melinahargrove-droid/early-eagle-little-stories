@@ -12,6 +12,7 @@
   "dependencies": {
     "@vitejs/plugin-react": "latest",
     "dexie": "latest",
+    "jszip": "latest",
     "vite": "latest",
     "vite-plugin-pwa": "latest",
     "react": "latest",
