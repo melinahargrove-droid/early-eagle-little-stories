@@ -41,6 +41,8 @@ async function fileChecksum(file) {
 }
 
 async function makeThumbnailBlob(file) {
+  if (!('createImageBitmap' in window)) return file
+
   const bitmap = await createImageBitmap(file)
   const maxEdge = 720
   const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height))
@@ -52,6 +54,7 @@ async function makeThumbnailBlob(file) {
   const context = canvas.getContext('2d', { alpha: false })
   context.drawImage(bitmap, 0, 0, width, height)
   bitmap.close()
+
   return new Promise((resolve, reject) => {
     canvas.toBlob(
       (blob) => (blob ? resolve(blob) : reject(new Error('Could not create thumbnail'))),
@@ -107,5 +110,8 @@ export async function importPhotos(bookId, fileList, onProgress) {
 }
 
 export async function listBooks() {
-  return db.books.where('deletedAt').equals(null).reverse().sortBy('updatedAt')
+  const books = await db.books.toArray()
+  return books
+    .filter((book) => !book.deletedAt)
+    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
 }
