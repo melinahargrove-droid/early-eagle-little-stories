@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { getThumbnailUrl, releaseObjectUrl } from '../photos/photoUrls.js'
+import { getOriginalPhotoUrl, getThumbnailUrl, releaseObjectUrl } from '../photos/photoUrls.js'
 import { getTheme, themeVars } from '../themes/themes.js'
 
-function PreviewPage({ page, themeId }) {
+function PreviewPage({ page, themeId, quality = 'preview' }) {
   const [urls, setUrls] = useState([])
   const theme = getTheme(themeId)
 
@@ -11,14 +11,15 @@ function PreviewPage({ page, themeId }) {
     const made = []
     ;(async () => {
       const next = []
+      const loader = quality === 'print' ? getOriginalPhotoUrl : getThumbnailUrl
       for (const id of page.photoIds ?? []) {
-        const url = await getThumbnailUrl(id)
+        const url = await loader(id)
         if (url) { made.push(url); next.push(url) }
       }
       if (alive) setUrls(next)
     })()
     return () => { alive = false; made.forEach(releaseObjectUrl) }
-  }, [page.id, page.photoIds])
+  }, [page.id, page.photoIds, quality])
 
   return (
     <article className={`print-page preview-letter-page themed-page theme-${theme.id} layout-${page.layoutId}`} style={themeVars(themeId)}>
@@ -31,7 +32,7 @@ function PreviewPage({ page, themeId }) {
           <>
             {page.title && <div className="page-title">{page.title}</div>}
             <div className="photo-slots">
-              {urls.map((url, index) => <img src={url} alt="" key={`${page.id}-${index}`} />)}
+              {urls.map((url, index) => <img src={url} alt="" key={`${page.id}-${quality}-${index}`} />)}
             </div>
             {page.caption && <p className="page-caption">{page.caption}</p>}
             {page.quote && <figure className="page-quote"><blockquote>“{page.quote}”</blockquote>{page.speaker && <figcaption>— {page.speaker}</figcaption>}</figure>}
@@ -53,14 +54,14 @@ export default function BookPreview({ book, pages, onClose }) {
             <div><strong>{book.title}</strong><span>{pages.length} pages • {theme.name} • Letter 8.5 × 11 portrait</span></div>
             <button className="preview-button" type="button" onClick={() => window.print()}>Print / Save PDF</button>
           </header>
-          <div className="print-check">✓ Theme applied • Printer-safe layout • Exact Letter page proportions</div>
+          <div className="print-check">✓ Original photos used for print • Printer-safe layout • Exact Letter page proportions</div>
           <div className="preview-page-stack">
-            {pages.map((page) => <PreviewPage page={page} themeId={book.themeId} key={page.id} />)}
+            {pages.map((page) => <PreviewPage page={page} themeId={book.themeId} quality="preview" key={page.id} />)}
           </div>
         </section>
       </main>
       <section className="print-document" aria-hidden="true">
-        {pages.map((page) => <PreviewPage page={page} themeId={book.themeId} key={`print-${page.id}`} />)}
+        {pages.map((page) => <PreviewPage page={page} themeId={book.themeId} quality="print" key={`print-${page.id}`} />)}
       </section>
     </>
   )
