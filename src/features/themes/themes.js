@@ -55,6 +55,14 @@ export function themeVars(themeId) {
   }
 }
 
+export function applyThemeToDocument(themeId) {
+  if (typeof document === 'undefined') return
+  const theme = getTheme(themeId)
+  const root = document.documentElement
+  root.dataset.bookTheme = theme.id
+  for (const [name, value] of Object.entries(themeVars(themeId))) root.style.setProperty(name, value)
+}
+
 export function suggestThemes(title = '') {
   const normalized = title.toLowerCase()
   const preferredIds = []
