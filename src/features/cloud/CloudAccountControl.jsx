@@ -26,13 +26,13 @@ export default function CloudAccountControl() {
     return () => { data.subscription.unsubscribe(); window.removeEventListener('online', sync); document.removeEventListener('visibilitychange', sync); clearInterval(timer) }
   }, [])
 
-  if (!status) return <div className="cloud-status">Checking Little Stories Cloud…</div>
-  if (!status.configured) return <div className="cloud-status cloud-warning"><strong>Cloud setup pending</strong><span>Add the Supabase project URL and publishable key when the backend is created.</span></div>
+  if (!status) return <div className="cloud-status">Checking One Little Teacher Cloud…</div>
+  if (!status.configured) return <div className="cloud-status cloud-warning"><strong>Cloud setup pending</strong><span>Add the shared One Little Teacher Supabase URL and publishable key when the backend is created.</span></div>
 
   async function magicLink() {
     if (!email.trim()) return
     setBusy(true); setMessage('')
-    try { await sendMagicLink(email); setMessage('Check your email for your Little Stories sign-in link.') }
+    try { await sendMagicLink(email); setMessage('Check your email for your One Little Teacher sign-in link.') }
     catch (error) { setMessage(error.message || 'Could not send the sign-in link.') }
     finally { setBusy(false) }
   }
@@ -45,13 +45,13 @@ export default function CloudAccountControl() {
   }
 
   async function restoreCloud() {
-    if (!window.confirm('Restore your latest online backup? This replaces the Little Stories data currently on this device.')) return
+    if (!window.confirm('Restore your latest Little Stories online backup? This replaces the Little Stories data currently on this device.')) return
     setBusy(true); setMessage('')
     try { await restoreLatestCloudBackup(); setMessage('Online backup restored. Reloading…'); setTimeout(() => location.reload(), 700) }
     catch (error) { setMessage(error.message || 'Online restore failed.') ; setBusy(false) }
   }
 
-  if (!status.signedIn) return <div className="cloud-control"><div className="cloud-status"><strong>Little Stories Cloud</strong><span>Sign in once on this device for automatic private backup.</span></div><input className="cloud-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email address"/><button className="backup-primary" type="button" onClick={magicLink} disabled={busy || !email.trim()}>{busy ? 'Sending…' : 'Email Me a Sign-In Link'}</button>{message && <div className="backup-message">{message}</div>}</div>
+  if (!status.signedIn) return <div className="cloud-control"><div className="cloud-status"><strong>One Little Teacher Cloud</strong><span>One private account can protect your One Little Teacher apps. Sign in once on this device for automatic Little Stories backup.</span></div><input className="cloud-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email address"/><button className="backup-primary" type="button" onClick={magicLink} disabled={busy || !email.trim()}>{busy ? 'Sending…' : 'Email Me a Sign-In Link'}</button>{message && <div className="backup-message">{message}</div>}</div>
 
-  return <div className="cloud-control"><div className="cloud-status cloud-good"><strong>Saved & backed up ✓</strong><span>{status.email}</span><span>Last online backup: {when(status.lastBackedUpAt)}</span></div><button className="backup-primary" type="button" onClick={backupNow} disabled={busy}>{busy ? 'Backing up…' : 'Back Up Now'}</button><button className="backup-secondary" type="button" onClick={restoreCloud} disabled={busy}>Restore Latest Online Backup</button><button className="cloud-link" type="button" onClick={async () => { await signOutCloud(); await refresh() }}>Sign out on this device</button>{message && <div className="backup-message">{message}</div>}</div>
+  return <div className="cloud-control"><div className="cloud-status cloud-good"><strong>Saved & backed up ✓</strong><span>{status.email}</span><span>Little Stories backup: {when(status.lastBackedUpAt)}</span></div><button className="backup-primary" type="button" onClick={backupNow} disabled={busy}>{busy ? 'Backing up…' : 'Back Up Now'}</button><button className="backup-secondary" type="button" onClick={restoreCloud} disabled={busy}>Restore Latest Little Stories Backup</button><button className="cloud-link" type="button" onClick={async () => { await signOutCloud(); await refresh() }}>Sign out on this device</button>{message && <div className="backup-message">{message}</div>}</div>
 }
