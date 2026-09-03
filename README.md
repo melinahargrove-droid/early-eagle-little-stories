@@ -7,7 +7,7 @@ Its purpose is simple: turn a folder of classroom photos into a beautiful, print
 ## Product principles
 
 - Books, projects, and themes are the organizing unit — not students.
-- The primary workflow is: Home → Name → Theme → Photos → Build → Your Book Is Ready → Edit → Preview/Print.
+- The primary workflow is: Home → Choose a Cover → Name Your Story → Photos → Build → Your Book Is Ready → Edit → Preview/Print.
 - The app is designed mobile-first for Android and installable as a PWA.
 - Printed books target true US Letter portrait pages: 8.5 × 11 inches.
 - Themes coordinate covers and inside pages while keeping classroom photographs dominant.
@@ -16,7 +16,7 @@ Its purpose is simple: turn a folder of classroom photos into a beautiful, print
 
 ## Initial architecture
 
-The app will separate:
+The app separates:
 
 1. UI and navigation
 2. Book/page/layout logic
@@ -49,10 +49,10 @@ Create a complete reliability loop:
 
 - installable Little Stories PWA
 - create a book
+- choose a cover
 - name it
-- choose a test theme
 - import photos
-- auto-build pages
+- auto-build pages with the cover as the first page
 - edit layouts/captions
 - preview and print exact Letter pages
 - close/reopen with all data intact
