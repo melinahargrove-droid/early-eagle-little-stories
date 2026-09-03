@@ -6,7 +6,7 @@ import { getThumbnailUrl, releaseObjectUrl } from './features/photos/photoUrls.j
 import { THEMES, getTheme, suggestThemes, themeVars } from './features/themes/themes.js'
 import BookPreview from './features/print/BookPreview.jsx'
 
-const ASSET_BASE = import.meta.env.BASE_URL
+const ASSET_BASE = 'https://raw.githubusercontent.com/melinahargrove-droid/early-eagle-little-stories/main/'
 const LAYOUTS = ['one-photo','two-equal','one-large-one-small','two-stacked','three-story','four-grid','collage-4']
 
 export default function AppClean() {
