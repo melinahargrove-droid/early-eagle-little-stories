@@ -99,10 +99,31 @@ export default function AppClean() {
 
 function Shell({children,onClose}){return <main className="flow-bg"><section className="flow-wrap"><button className="close" onClick={onClose}>×</button>{children}</section></main>}
 
+function splitTitleAndYear(value=''){
+  const clean=value.trim()
+  const match=clean.match(/^(.*?)(?:\s*[-–—]\s*|\s+)(20\d{2})$/)
+  if(!match)return {title:clean,year:''}
+  return {title:match[1].trim(),year:match[2]}
+}
+
 function BookCard({book,onOpen}){
   const [url,setUrl]=useState(null)
   const theme=getTheme(book.themeId)
+  const titleParts=splitTitleAndYear(book.title)
   useEffect(()=>{let live=true;let made=null;(async()=>{if(!book.photoIds?.[0])return;made=await getThumbnailUrl(book.photoIds[0]);if(live)setUrl(made)})();return()=>{live=false;releaseObjectUrl(made)}},[book.id,book.photoIds])
+
+  if(theme.id==='classroom-keepsake'){
+    return <button className="book-card-clean" onClick={onOpen}>
+      <div className="cover everyday-classroom-cover">
+        <img className="everyday-cover-bg" src={`${ASSET_BASE}everyday-classroom-background.png`} alt=""/>
+        {url?<img className="everyday-cover-photo" src={url} alt=""/>:<div className="everyday-cover-no-photo">Add a photo</div>}
+        <img className="everyday-cover-overlay" src={`${ASSET_BASE}everyday-classroom-foreground.png`} alt=""/>
+        <div className="everyday-cover-live-text"><strong>{titleParts.title}</strong>{titleParts.year&&<span className="everyday-cover-year">{titleParts.year}</span>}</div>
+      </div>
+      <b>{book.title}</b><small>{book.photoIds?.length??0} photos • {book.pageIds?.length??0} pages</small>
+    </button>
+  }
+
   return <button className="book-card-clean" onClick={onOpen}><div className="cover" style={themeVars(book.themeId)}>{url&&<img src={url} alt=""/>}<div><span>{theme.motif}</span><strong>{book.title}</strong></div></div><b>{book.title}</b><small>{book.photoIds?.length??0} photos • {book.pageIds?.length??0} pages</small></button>
 }
 
