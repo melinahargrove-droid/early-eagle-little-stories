@@ -1,81 +1,23 @@
 export const THEMES = [
-  {
-    id: 'classroom-keepsake', name: 'Everyday Classroom', category: 'Classroom',
-    description: 'Warm paper, dusty-blue book cloth, gentle botanicals, and timeless classroom keepsake styling.',
-    accent: '#6f86a8', ink: '#213a61', paper: '#fbf6ea', soft: '#dce5ef', secondary: '#b9c99f', motif: '✎', pattern: 'gingham',
-    titleFont: "Georgia, 'Times New Roman', serif", bodyFont: "Arial, sans-serif", captionFont: "'Segoe Print', 'Bradley Hand', cursive",
-  },
-  {
-    id: 'family-gathering', name: 'Family Gathering', category: 'Celebrations',
-    description: 'Cozy ivory paper, soft florals, tiny hearts, and sentimental photo framing.',
-    accent: '#a77f8f', ink: '#4e3b54', paper: '#fff8ee', soft: '#eddde0', secondary: '#b9c6a3', motif: '♡', pattern: 'floral',
-    titleFont: "Georgia, 'Times New Roman', serif", bodyFont: "Arial, sans-serif", captionFont: "'Segoe Print', 'Bradley Hand', cursive",
-  },
-  {
-    id: 'little-explorer', name: 'Little Explorer', category: 'Nature',
-    description: 'Field-journal paper, pressed leaves, specimen labels, and hand-drawn details.',
-    accent: '#72896f', ink: '#34483b', paper: '#f6f1df', soft: '#dfe6d4', secondary: '#aa8d68', motif: '⌕', pattern: 'field-notes',
-    titleFont: "Georgia, 'Times New Roman', serif", bodyFont: "Arial, sans-serif", captionFont: "'Segoe Print', 'Bradley Hand', cursive",
-  },
-  {
-    id: 'building-big-ideas', name: 'Building Big Ideas', category: 'Classroom',
-    description: 'Blueprint details, graph paper, measuring marks, and subtle construction textures.',
-    accent: '#587da1', ink: '#203e61', paper: '#f7f4e9', soft: '#dce8f2', secondary: '#d1ad67', motif: '⌑', pattern: 'blueprint',
-    titleFont: "Georgia, 'Times New Roman', serif", bodyFont: "Arial, sans-serif", captionFont: "'Segoe Print', 'Bradley Hand', cursive",
-  },
-  {
-    id: 'spooky-sweet', name: 'Spooky Sweet', category: 'Holidays',
-    description: 'Dusty lavender, faded orange, watercolor pumpkins, moons, and tiny ink stars.',
-    accent: '#806a92', ink: '#3f334e', paper: '#fbf4e8', soft: '#e8ddec', secondary: '#c8845d', motif: '✦', pattern: 'night-sky',
-    titleFont: "Georgia, 'Times New Roman', serif", bodyFont: "Arial, sans-serif", captionFont: "'Segoe Print', 'Bradley Hand', cursive",
-  },
-  {
-    id: 'christmas-magic', name: 'Christmas Magic', category: 'Holidays',
-    description: 'Warm storybook Christmas with evergreen, muted cranberry, gold stars, and cream paper.',
-    accent: '#6f8470', ink: '#314b3a', paper: '#fbf5e8', soft: '#dfe7db', secondary: '#a65f61', motif: '✧', pattern: 'evergreen',
-    titleFont: "Georgia, 'Times New Roman', serif", bodyFont: "Arial, sans-serif", captionFont: "'Segoe Print', 'Bradley Hand', cursive",
-  },
+  {id:'classroom-keepsake',name:'Everyday Classroom',category:'Classroom',cover:'everyday-classroom-cover-8.5x11.png',description:'Soft classroom keepsake with blocks, crayons, child art, and everyday materials.',accent:'#6f86a8',ink:'#213a61',paper:'#fbf6ea',soft:'#dce5ef',secondary:'#b9c99f',motif:'✎',pattern:'gingham'},
+  {id:'family-gathering',name:'Family Gathering',category:'Celebrations',cover:'family-gathering-cover-8.5x11.png',description:'Warm handmade gathering with bunting, mixed papers, and welcoming celebration details.',accent:'#a66b50',ink:'#3f4c59',paper:'#fff8ee',soft:'#eadcc7',secondary:'#8d9875',motif:'♡',pattern:'bunting'},
+  {id:'nature-discovery',name:'Nature & Discovery',category:'Nature',cover:'nature-discovery-cover-8.5x11.png',description:'A little field journal with leaves, specimens, sketches, and a magnifying glass.',accent:'#72896f',ink:'#34483b',paper:'#f6f1df',soft:'#dfe6d4',secondary:'#aa8d68',motif:'⌕',pattern:'field-notes'},
+  {id:'celebration',name:'Celebration',category:'Celebrations',cover:'celebration-cover-8.5x11.png',description:'Bunting, stars, confetti, streamers, and colorful handmade paper for special days.',accent:'#587da1',ink:'#203e61',paper:'#fff9ec',soft:'#e6dfc8',secondary:'#d1ad67',motif:'★',pattern:'confetti'},
+  {id:'little-artists',name:'Little Artists',category:'Classroom',cover:'little-artists-cover-8.5x11.png',description:'Paint, crayons, brushstrokes, tape, and torn artwork scraps for creative classroom stories.',accent:'#5f8f91',ink:'#294e5c',paper:'#fff9ec',soft:'#d9e8e5',secondary:'#d4a75d',motif:'✎',pattern:'paint'},
+  {id:'building-big-ideas',name:'Little Builders',category:'Classroom',cover:'little-builders-cover-8.5x11.png',description:'Blueprints, building sketches, graph paper, blocks, and measuring details.',accent:'#587da1',ink:'#203e61',paper:'#f7f4e9',soft:'#dce8f2',secondary:'#d1ad67',motif:'⌑',pattern:'blueprint'},
+  {id:'little-scientists',name:'Little Scientists',category:'Classroom',cover:'little-scientists-cover-8.5x11.png',description:'Experiment notes, beakers, measuring tools, graphs, and investigation sketches.',accent:'#71879a',ink:'#354b5d',paper:'#faf6e9',soft:'#dde5e7',secondary:'#8c9a77',motif:'⌕',pattern:'lab-notes'},
+  {id:'little-pretenders',name:'Little Pretenders',category:'Classroom',cover:'little-pretenders-cover-8.5x11.png',description:'A playful imagination journal for dramatic play, pretend worlds, and make-believe stories.',accent:'#806a82',ink:'#493d52',paper:'#fbf6ea',soft:'#e6dce5',secondary:'#849177',motif:'✦',pattern:'pretend'},
+  {id:'fall-days',name:'Fall',category:'Seasons',cover:'fall-cover-8.5x11.png',description:'Warm autumn leaves, plaid, pumpkins, apples, acorns, and cozy seasonal textures.',accent:'#a8613f',ink:'#4f4638',paper:'#fbf4e5',soft:'#ead7bd',secondary:'#778064',motif:'✦',pattern:'autumn'},
+  {id:'school-days',name:'School Days',category:'School',cover:'school-days-cover-8.5x11.png',description:'Bright primary-color school memories with crayons, blocks, apple, backpack, and schoolhouse.',accent:'#3277b8',ink:'#174d82',paper:'#fffdf7',soft:'#dceafa',secondary:'#e5b438',motif:'★',pattern:'school'},
+  {id:'spooky-sweet',name:'Halloween',category:'Holidays',cover:'halloween-cover-8.5x11.png',description:'Friendly vintage Halloween with pumpkins, a black cat, bats, moon, web, and gingham.',accent:'#806a92',ink:'#3f334e',paper:'#fbf4e8',soft:'#e8ddec',secondary:'#c8845d',motif:'✦',pattern:'night-sky'},
+  {id:'christmas-magic',name:'Christmas',category:'Holidays',cover:'christmas-cover-8.5x11.png',description:'Classic storybook Christmas with evergreen, red gingham, warm gold, ornaments, and holly.',accent:'#59765d',ink:'#314b3a',paper:'#fbf5e8',soft:'#dfe7db',secondary:'#a65f61',motif:'✧',pattern:'evergreen'},
+  {id:'summer-days',name:'Summer Days',category:'Seasons',cover:'summer-days-cover-8.5x11.png',description:'Sunny aqua, yellow, coral, bubbles, watermelon, lemonade, and playful summer details.',accent:'#4fa9b2',ink:'#245c70',paper:'#fffaf0',soft:'#dff2ef',secondary:'#e4b743',motif:'☀',pattern:'summer'},
 ]
 
-export function getTheme(themeId) {
-  return THEMES.find((theme) => theme.id === themeId) ?? THEMES[0]
-}
+const fonts={titleFont:"Georgia, 'Times New Roman', serif",bodyFont:"Arial, sans-serif",captionFont:"'Segoe Print', 'Bradley Hand', cursive"}
+for(const theme of THEMES) Object.assign(theme,fonts)
 
-export function themeVars(themeId) {
-  const theme = getTheme(themeId)
-  return {
-    '--book-accent': theme.accent,
-    '--book-ink': theme.ink,
-    '--book-paper': theme.paper,
-    '--book-soft': theme.soft,
-    '--book-secondary': theme.secondary,
-    '--book-title-font': theme.titleFont,
-    '--book-body-font': theme.bodyFont,
-    '--book-caption-font': theme.captionFont,
-  }
-}
-
-export function applyThemeToDocument(themeId) {
-  if (typeof document === 'undefined') return
-  const theme = getTheme(themeId)
-  const root = document.documentElement
-  root.dataset.bookTheme = theme.id
-  for (const [name, value] of Object.entries(themeVars(themeId))) root.style.setProperty(name, value)
-}
-
-export function suggestThemes(title = '') {
-  const normalized = title.toLowerCase()
-  const preferredIds = []
-  if (/halloween|costume|pumpkin|spooky/.test(normalized)) preferredIds.push('spooky-sweet')
-  if (/christmas|holiday|winter|santa/.test(normalized)) preferredIds.push('christmas-magic')
-  if (/build|block|tower|bridge|construction/.test(normalized)) preferredIds.push('building-big-ideas')
-  if (/outside|nature|field trip|garden|bug|leaf|leaves|found/.test(normalized)) preferredIds.push('little-explorer')
-  if (/family|family night|families/.test(normalized)) preferredIds.push('family-gathering')
-  if (/first week|school|classroom|our class|first day/.test(normalized)) preferredIds.push('classroom-keepsake')
-  const suggested = preferredIds.map((id) => THEMES.find((theme) => theme.id === id)).filter(Boolean)
-  for (const theme of THEMES) {
-    if (suggested.length >= 3) break
-    if (!suggested.some((item) => item.id === theme.id)) suggested.push(theme)
-  }
-  return suggested.slice(0, 3)
-}
+export function getTheme(themeId){return THEMES.find(theme=>theme.id===themeId)??THEMES[0]}
+export function themeVars(themeId){const theme=getTheme(themeId);return {'--book-accent':theme.accent,'--book-ink':theme.ink,'--book-paper':theme.paper,'--book-soft':theme.soft,'--book-secondary':theme.secondary,'--book-title-font':theme.titleFont,'--book-body-font':theme.bodyFont,'--book-caption-font':theme.captionFont}}
+export function applyThemeToDocument(themeId){if(typeof document==='undefined')return;const theme=getTheme(themeId);const root=document.documentElement;root.dataset.bookTheme=theme.id;for(const [name,value] of Object.entries(themeVars(themeId)))root.style.setProperty(name,value)}
+export function suggestThemes(title=''){const n=title.toLowerCase(),ids=[];if(/halloween|costume|trick|spooky/.test(n))ids.push('spooky-sweet');if(/christmas|xmas|christmas party/.test(n))ids.push('christmas-magic');if(/summer|water day|sunshine/.test(n))ids.push('summer-days');if(/fall|autumn|apple|pumpkin|leaves/.test(n))ids.push('fall-days');if(/first week|back to school|school|first day/.test(n))ids.push('school-days');if(/build|block|tower|bridge|construction/.test(n))ids.push('building-big-ideas');if(/science|experiment|mix|investigat/.test(n))ids.push('little-scientists');if(/paint|art|draw|artist/.test(n))ids.push('little-artists');if(/pretend|dramatic|restaurant|doctor|store/.test(n))ids.push('little-pretenders');if(/outside|nature|field trip|garden|bug|leaf|found/.test(n))ids.push('nature-discovery');if(/family|family night|families/.test(n))ids.push('family-gathering');if(/party|celebrat|graduat|field day/.test(n))ids.push('celebration');if(/classroom|our class|center|play/.test(n))ids.push('classroom-keepsake');const suggested=[...new Set(ids)].map(id=>THEMES.find(t=>t.id===id)).filter(Boolean);for(const theme of THEMES){if(suggested.length>=3)break;if(!suggested.some(item=>item.id===theme.id))suggested.push(theme)}return suggested.slice(0,3)}
