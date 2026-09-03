@@ -22,108 +22,31 @@ export default function AppClean() {
   const [storage,setStorage]=useState('Checking storage…')
   const suggestions=useMemo(()=>suggestThemes(title),[title])
 
-  useEffect(()=>{
-    let live=true
-    ;(async()=>{
-      await db.open()
-      const persistent=await ensurePersistentStorage()
-      if(!live)return
-      setBooks(await listBooks())
-      setStorage(persistent?'Protected on this device':'Saved on this device')
-    })().catch(()=>setStorage('Storage needs attention'))
-    return()=>{live=false}
-  },[])
-
-  const home=async()=>{
-    setBooks(await listBooks())
-    setStep('home');setTitle('');setBook(null);setThemeId(null);setFiles([]);setPages([]);setPageIndex(0);setProgress(null)
-  }
-
-  const startBook=async(e)=>{
-    e.preventDefault()
-    if(!title.trim())return
-    const created=await createBookDraft(title.trim())
-    setBook(created);setStep('theme');setBooks(await listBooks())
-  }
-
-  const chooseTheme=async(id)=>{
-    const updated=await updateBookTheme(book.id,id)
-    setBook(updated);setThemeId(id)
-  }
-
-  const build=async()=>{
-    if(!files.length)return
-    setProgress({completed:0,total:files.length})
-    await importPhotos(book.id,files,setProgress)
-    const built=await buildBookPages(book.id)
-    const updated=await db.books.get(book.id)
-    setBook(updated);setPages(built);setProgress(null);setStep('ready')
-  }
-
-  const openBook=async(item)=>{
-    const itemPages=await getBookPages(item.id)
-    setBook(item);setTitle(item.title);setThemeId(item.themeId);setPages(itemPages);setPageIndex(0)
-    setStep(itemPages.length?'editor':'photos')
-  }
-
+  useEffect(()=>{let live=true;(async()=>{await db.open();const persistent=await ensurePersistentStorage();if(!live)return;setBooks(await listBooks());setStorage(persistent?'Protected on this device':'Saved on this device')})().catch(()=>setStorage('Storage needs attention'));return()=>{live=false}},[])
+  const home=async()=>{setBooks(await listBooks());setStep('home');setTitle('');setBook(null);setThemeId(null);setFiles([]);setPages([]);setPageIndex(0);setProgress(null)}
+  const startBook=async(e)=>{e.preventDefault();if(!title.trim())return;const created=await createBookDraft(title.trim());setBook(created);setStep('theme');setBooks(await listBooks())}
+  const chooseTheme=async(id)=>{const updated=await updateBookTheme(book.id,id);setBook(updated);setThemeId(id)}
+  const build=async()=>{if(!files.length)return;setProgress({completed:0,total:files.length});await importPhotos(book.id,files,setProgress);const built=await buildBookPages(book.id);const updated=await db.books.get(book.id);setBook(updated);setPages(built);setProgress(null);setStep('ready')}
+  const openBook=async(item)=>{const itemPages=await getBookPages(item.id);setBook(item);setTitle(item.title);setThemeId(item.themeId);setPages(itemPages);setPageIndex(0);setStep(itemPages.length?'editor':'photos')}
   const updatePage=(updated)=>setPages(current=>current.map(p=>p.id===updated.id?updated:p))
 
   if(step==='preview')return <BookPreview book={book} pages={pages} onClose={()=>setStep('editor')}/>
-
-  if(step==='editor'){
-    return <Editor
-      book={book}
-      page={pages[pageIndex]}
-      index={pageIndex}
-      count={pages.length}
-      onHome={home}
-      onPreview={()=>setStep('preview')}
-      onPrev={()=>setPageIndex(i=>Math.max(0,i-1))}
-      onNext={()=>setPageIndex(i=>Math.min(pages.length-1,i+1))}
-      onLayout={async id=>updatePage(await updatePageLayout(pages[pageIndex].id,id))}
-      onAnother={async()=>updatePage(await tryAnotherLook(pages[pageIndex].id))}
-      onCaption={async text=>updatePage(await updatePageText(pages[pageIndex].id,{caption:text}))}
-    />
-  }
-
+  if(step==='editor')return <Editor book={book} page={pages[pageIndex]} index={pageIndex} count={pages.length} onHome={home} onPreview={()=>setStep('preview')} onPrev={()=>setPageIndex(i=>Math.max(0,i-1))} onNext={()=>setPageIndex(i=>Math.min(pages.length-1,i+1))} onLayout={async id=>updatePage(await updatePageLayout(pages[pageIndex].id,id))} onAnother={async()=>updatePage(await tryAnotherLook(pages[pageIndex].id))} onCaption={async text=>updatePage(await updatePageText(pages[pageIndex].id,{caption:text}))}/>
   if(step==='name')return <Shell onClose={home}><form className="flow-card" onSubmit={startBook}><span className="kicker">Create a Book</span><h1>What is this story about?</h1><p>Give it the title you want to see on your classroom bookshelf.</p><input value={title} onChange={e=>setTitle(e.target.value)} placeholder="Family Night" autoFocus/><button className="main-button" disabled={!title.trim()}>Continue to Themes</button></form></Shell>
-
   if(step==='theme')return <Shell onClose={home}><section className="flow-card"><span className="kicker">Choose a Theme</span><h1>A look for “{title}”</h1><p>Pick the style that fits your story. You can change it later.</p><div className="theme-grid">{THEMES.map(theme=><button key={theme.id} className={`theme-choice ${themeId===theme.id?'selected':''}`} onClick={()=>chooseTheme(theme.id)}><div className="theme-swatch" style={themeVars(theme.id)}><span>{theme.motif}</span><strong>{title}</strong></div><b>{theme.name}</b><small>{suggestions.some(s=>s.id===theme.id)?'Suggested • ':''}{theme.category}</small></button>)}</div><button className="main-button" disabled={!themeId} onClick={()=>setStep('photos')}>Continue</button></section></Shell>
-
   if(step==='photos')return <Shell onClose={home}><section className="flow-card"><span className="kicker">Add Photos</span><h1>Choose the memories.</h1><p>Select a whole group at once. Little Stories will arrange the first draft.</p><label className="photo-picker"><strong>{files.length?`${files.length} photos selected`:'Choose Photos'}</strong><small>From your phone or photo library</small><input type="file" accept="image/*" multiple onChange={e=>setFiles([...e.target.files])}/></label>{progress&&<div className="progress"><span>Saving {progress.completed} of {progress.total}</span><progress value={progress.completed} max={progress.total}/></div>}<button className="main-button" disabled={!files.length||progress} onClick={build}>Save Photos & Build Book</button></section></Shell>
-
   if(step==='ready')return <Shell onClose={home}><section className="flow-card ready"><span className="kicker">Your Book Is Ready</span><h1>We made {pages.length} pages.</h1><p>Your photos are arranged into a first draft. Nothing is locked.</p><button className="main-button" onClick={()=>setStep('editor')}>Open Book</button></section></Shell>
 
   return <main className="home-bg"><section className="home-wrap"><header className="home-header"><span>One Little Teacher</span><h1>Little Stories</h1><p>our classroom stories</p></header><button className="create-card" onClick={()=>setStep('name')}><img src={`${ASSET_BASE}little-stories-create-book-camera.png`} alt=""/><div><i>＋</i><strong>Create a Book</strong><small>Turn today's moments into a beautiful book.</small></div></button><section className="books-panel"><div className="books-title"><h2>Your Books</h2><span>{books.length}</span></div>{books.length?<div className="book-grid">{books.map(item=><BookCard key={item.id} book={item} onOpen={()=>openBook(item)}/>)}</div>:<div className="empty"><strong>Your first story starts here.</strong><p>Add classroom photos and Little Stories will turn them into a beautiful first draft.</p></div>}</section><footer className="saved-pill"><img src={`${ASSET_BASE}little-stories-cloud-saved-icon.png`} alt=""/><div><strong>Saved & backed up</strong><small>{storage}</small></div></footer></section></main>
 }
 
 function Shell({children,onClose}){return <main className="flow-bg"><section className="flow-wrap"><button className="close" onClick={onClose}>×</button>{children}</section></main>}
-
-function splitTitleAndYear(value=''){
-  const clean=value.trim()
-  const match=clean.match(/^(.*?)(?:\s*[-–—]\s*|\s+)(20\d{2})$/)
-  if(!match)return {title:clean,year:''}
-  return {title:match[1].trim(),year:match[2]}
-}
+function splitTitleAndYear(value=''){const clean=value.trim();const match=clean.match(/^(.*?)(?:\s*[-–—]\s*|\s+)(20\d{2})$/);if(!match)return {title:clean,year:''};return {title:match[1].trim(),year:match[2]}}
 
 function BookCard({book,onOpen}){
-  const [url,setUrl]=useState(null)
-  const theme=getTheme(book.themeId)
-  const titleParts=splitTitleAndYear(book.title)
+  const [url,setUrl]=useState(null);const theme=getTheme(book.themeId);const titleParts=splitTitleAndYear(book.title)
   useEffect(()=>{let live=true;let made=null;(async()=>{if(!book.photoIds?.[0])return;made=await getThumbnailUrl(book.photoIds[0]);if(live)setUrl(made)})();return()=>{live=false;releaseObjectUrl(made)}},[book.id,book.photoIds])
-
-  if(theme.id==='classroom-keepsake'){
-    return <button className="book-card-clean" onClick={onOpen}>
-      <div className="cover everyday-classroom-cover">
-        <img className="everyday-cover-bg" src={`${ASSET_BASE}everyday-classroom-background.png`} alt=""/>
-        {url?<img className="everyday-cover-photo" src={url} alt=""/>:<div className="everyday-cover-no-photo">Add a photo</div>}
-        <img className="everyday-cover-overlay" src={`${ASSET_BASE}everyday-classroom-foreground.png`} alt=""/>
-        <div className="everyday-cover-live-text"><strong>{titleParts.title}</strong>{titleParts.year&&<span className="everyday-cover-year">{titleParts.year}</span>}</div>
-      </div>
-      <b>{book.title}</b><small>{book.photoIds?.length??0} photos • {book.pageIds?.length??0} pages</small>
-    </button>
-  }
-
+  if(theme.id==='classroom-keepsake')return <button className="book-card-clean" onClick={onOpen}><div className="cover everyday-classroom-cover"><img className="everyday-cover-bg" src={`${ASSET_BASE}everyday-classroom-background.png`} alt=""/><div className="everyday-photo-window">{url?<img src={url} alt=""/>:<span>Add a photo</span>}</div><img className="everyday-cover-overlay" src={`${ASSET_BASE}everyday-classroom-foreground.png`} alt=""/><div className="everyday-cover-live-text"><strong>{titleParts.title}</strong>{titleParts.year&&<span className="everyday-cover-year">{titleParts.year}</span>}</div></div><b>{book.title}</b><small>{book.photoIds?.length??0} photos • {book.pageIds?.length??0} pages</small></button>
   return <button className="book-card-clean" onClick={onOpen}><div className="cover" style={themeVars(book.themeId)}>{url&&<img src={url} alt=""/>}<div><span>{theme.motif}</span><strong>{book.title}</strong></div></div><b>{book.title}</b><small>{book.photoIds?.length??0} photos • {book.pageIds?.length??0} pages</small></button>
 }
 
