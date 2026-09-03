@@ -1,4 +1,4 @@
 .home-bg{position:relative;isolation:isolate;background:#faf3e6!important;overflow:hidden}
-.home-bg::before{content:'';position:absolute;z-index:0;top:0;left:0;right:0;height:min(1180px,175vw);background:url('https://raw.githubusercontent.com/melinahargrove-droid/early-eagle-little-stories/main/little-stories-home-background.png') top center/100% auto no-repeat!important;-webkit-mask-image:none!important;mask-image:none!important;pointer-events:none}
-.home-bg::after{content:'';position:absolute;z-index:1;left:0;right:0;top:calc(min(1180px,175vw) - 340px);height:360px;background:linear-gradient(to bottom,rgba(250,243,230,0) 0%,rgba(250,243,230,.08) 16%,rgba(250,243,230,.26) 34%,rgba(250,243,230,.55) 56%,rgba(250,243,230,.82) 78%,#faf3e6 100%);pointer-events:none}
+.home-bg::before{content:'';position:absolute;z-index:0;top:0;left:0;right:0;height:560px;background:url('https://raw.githubusercontent.com/melinahargrove-droid/early-eagle-little-stories/main/little-stories-home-background.png') top center/100% auto no-repeat!important;pointer-events:none}
+.home-bg::after{content:'';position:absolute;z-index:1;left:0;right:0;top:420px;height:150px;background:linear-gradient(to bottom,rgba(250,243,230,0) 0%,rgba(250,243,230,.38) 45%,#faf3e6 100%);pointer-events:none}
 .home-bg>.home-wrap{position:relative;z-index:2}
