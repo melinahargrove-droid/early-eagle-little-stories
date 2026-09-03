@@ -1,8 +1,8 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import App from './AppClean.jsx'
 import BackupDock from './features/backup/BackupDock.jsx'
-import './styles.css'
+import './app-clean.css'
 import './features/backup/backup.css'
 
 createRoot(document.getElementById('root')).render(
