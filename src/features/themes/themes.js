@@ -1,7 +1,7 @@
 export const THEMES = [
   {
-    id: 'classroom-keepsake', name: 'Classroom Keepsake', category: 'Classroom',
-    description: 'Warm paper, gingham, school-day details, and quiet keepsake styling.',
+    id: 'classroom-keepsake', name: 'Everyday Classroom', category: 'Classroom',
+    description: 'Warm paper, dusty-blue book cloth, gentle botanicals, and timeless classroom keepsake styling.',
     accent: '#6f86a8', ink: '#213a61', paper: '#fbf6ea', soft: '#dce5ef', secondary: '#b9c99f', motif: '✎', pattern: 'gingham',
     titleFont: "Georgia, 'Times New Roman', serif", bodyFont: "Arial, sans-serif", captionFont: "'Segoe Print', 'Bradley Hand', cursive",
   },
