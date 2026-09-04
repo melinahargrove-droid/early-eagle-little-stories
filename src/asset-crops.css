@@ -3,3 +3,4 @@
    artwork; the composition engine will continue using the other medium
    art assets without touching AppClean.jsx. */
 .interior-little-artists img[src*="medium-flower-art.png"]{display:none!important}
+.interior-little-artists img[src*="filler-doodle-star.png"]{z-index:8!important}
