@@ -1,3 +1,5 @@
-/* Little Artists assets are now individually cleaned transparent PNGs.
-   Do not crop, clip, or hide them here; the placement engine can render
-   the complete artwork directly. */
+/* Little Artists v2: the replacement PNGs are already cleaned.
+   Keep every asset uncropped. Retire only the old contaminated flower
+   artwork; the composition engine will continue using the other medium
+   art assets without touching AppClean.jsx. */
+.interior-little-artists img[src*="medium-flower-art.png"]{display:none!important}
