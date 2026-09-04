@@ -1,0 +1,207 @@
+{
+  "kit": "Little Artists Kit 01",
+  "themeId": "little-artists",
+  "rules": {
+    "onePhoto": {
+      "hero": [
+        0,
+        1
+      ],
+      "medium": [
+        1,
+        2
+      ],
+      "paper": [
+        1,
+        2
+      ],
+      "tape": [
+        1,
+        2
+      ],
+      "filler": [
+        2,
+        4
+      ]
+    },
+    "twoPhoto": {
+      "hero": [
+        0,
+        1
+      ],
+      "medium": [
+        0,
+        1
+      ],
+      "paper": [
+        1,
+        2
+      ],
+      "tape": [
+        1,
+        2
+      ],
+      "filler": [
+        2,
+        3
+      ]
+    },
+    "threePhoto": {
+      "hero": [
+        0,
+        0
+      ],
+      "medium": [
+        0,
+        1
+      ],
+      "paper": [
+        0,
+        1
+      ],
+      "tape": [
+        1,
+        2
+      ],
+      "filler": [
+        1,
+        3
+      ]
+    },
+    "fourPhoto": {
+      "hero": [
+        0,
+        0
+      ],
+      "medium": [
+        0,
+        0
+      ],
+      "paper": [
+        0,
+        1
+      ],
+      "tape": [
+        0,
+        1
+      ],
+      "filler": [
+        1,
+        2
+      ]
+    },
+    "avoidTogether": [
+      [
+        "hero-watercolor-palette.png",
+        "hero-brush-jar.png"
+      ]
+    ],
+    "maxPhotoOverlapPercent": 8
+  },
+  "assets": [
+    {
+      "file": "hero-watercolor-palette.png",
+      "category": "hero"
+    },
+    {
+      "file": "hero-brush-jar.png",
+      "category": "hero"
+    },
+    {
+      "file": "hero-glue-bottle.png",
+      "category": "hero"
+    },
+    {
+      "file": "hero-crayons.png",
+      "category": "hero"
+    },
+    {
+      "file": "hero-scissors.png",
+      "category": "hero"
+    },
+    {
+      "file": "medium-crossed-brushes.png",
+      "category": "medium"
+    },
+    {
+      "file": "medium-rainbow-art.png",
+      "category": "medium"
+    },
+    {
+      "file": "paper-blue-torn.png",
+      "category": "paper"
+    },
+    {
+      "file": "paper-rainbow-painted.png",
+      "category": "paper"
+    },
+    {
+      "file": "medium-flower-art.png",
+      "category": "medium"
+    },
+    {
+      "file": "hero-art-apron.png",
+      "category": "hero"
+    },
+    {
+      "file": "filler-rainbow-swatches.png",
+      "category": "filler"
+    },
+    {
+      "file": "filler-paint-splatters.png",
+      "category": "filler"
+    },
+    {
+      "file": "filler-doodle-heart.png",
+      "category": "filler"
+    },
+    {
+      "file": "filler-doodle-star.png",
+      "category": "filler"
+    },
+    {
+      "file": "filler-doodle-spiral.png",
+      "category": "filler"
+    },
+    {
+      "file": "paper-cream-torn.png",
+      "category": "paper"
+    },
+    {
+      "file": "tape-yellow-stripe.png",
+      "category": "tape"
+    },
+    {
+      "file": "paper-blue-small.png",
+      "category": "paper"
+    },
+    {
+      "file": "paper-polka-dot.png",
+      "category": "paper"
+    },
+    {
+      "file": "tape-blue-gingham.png",
+      "category": "tape"
+    },
+    {
+      "file": "tape-purple.png",
+      "category": "tape"
+    },
+    {
+      "file": "tape-pink-polka.png",
+      "category": "tape"
+    },
+    {
+      "file": "tape-sage.png",
+      "category": "tape"
+    },
+    {
+      "file": "filler-color-dots.png",
+      "category": "filler"
+    },
+    {
+      "file": "filler-mini-brushmarks.png",
+      "category": "filler"
+    }
+  ]
+}
